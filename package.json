@@ -1,0 +1,20 @@
+{
+  "name": "kimi_agent_blagofu.k-web-design",
+  "version": "1.0.0",
+  "description": "A premium, full-stack web application for BLAGOFU.K, a Nigerian women's fashion brand specializing in Ankara, Lace, and Asoebi designs.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "nodemon": "^3.1.14",
+    "rxpress": "^0.3.0"
+  }
+}
