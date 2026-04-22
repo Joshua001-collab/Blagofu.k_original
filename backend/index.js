@@ -9,11 +9,12 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this-in-production';
+const BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;    
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5000', '*'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5000', 'https://blagofu-frontend.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
@@ -130,7 +131,7 @@ app.post('/api/products', verifyToken, upload.single('image'), (req, res) => {
   try {
     const products = readFile(productPath);
     const { title, category, description } = req.body;
-    const image = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : '';
+    const image =`${BASE_URL}/uploads/${req.file.filename}`
 
     const newProduct = {
       id: Date.now().toString(),
@@ -166,7 +167,7 @@ app.put('/api/products/:id', verifyToken, upload.single('image'), (req, res) => 
       title,
       category,
       description,
-      ...(req.file && { image: `http://localhost:5000/uploads/${req.file.filename}` }),
+      ...(req.file && { image: `${BASE_URL}/uploads/${req.file.filename}` }),
       updatedAt: new Date().toISOString()
     };
 
@@ -204,7 +205,7 @@ app.post('/api/materials', verifyToken, upload.single('image'), (req, res) => {
   try {
     const materials = readFile(materialPath);
     const { title, category, description } = req.body;
-    const image = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : '';
+    const image = req.file ? `${BASE_URL}/uploads/${req.file.filename}` : '';
 
     const newMaterial = {
       id: Date.now().toString(),
@@ -239,7 +240,7 @@ app.put('/api/materials/:id', verifyToken, upload.single('image'), (req, res) =>
       title,
       category,
       description,
-      ...(req.file && { image: `http://localhost:5000/uploads/${req.file.filename}` }),
+      ...(req.file && { image: `${BASE_URL}/uploads/${req.file.filename}` }),
       updatedAt: new Date().toISOString()
     };
 
@@ -277,7 +278,7 @@ app.post('/api/gallery', verifyToken, upload.single('image'), (req, res) => {
   try {
     const gallery = readFile(galleryPath);
     const { caption } = req.body;
-    const image = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : '';
+    const image = req.file ? `${BASE_URL}/uploads/${req.file.filename}` : '';
 
     const newImage = {
       id: Date.now().toString(),
@@ -308,7 +309,7 @@ app.put('/api/gallery/:id', verifyToken, upload.single('image'), (req, res) => {
     gallery[index] = {
       ...gallery[index],
       caption,
-      ...(req.file && { image: `http://localhost:5000/uploads/${req.file.filename}` }),
+      ...(req.file && { image: `${BASE_URL}/uploads/${req.file.filename}` }),
       updatedAt: new Date().toISOString()
     };
 
